@@ -14,7 +14,6 @@ setuptools.setup(
     url='https://github.com/realsirjoe/instagram-scraper',
     install_requires=[
         'requests>=2.21.0',
-        'python-slugify==3.0.2'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

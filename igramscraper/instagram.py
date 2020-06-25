@@ -1,10 +1,10 @@
+import base64
 import time
 import requests
 import re
 import json
 import hashlib
 import os
-from slugify import slugify
 import random
 from .session_manager import CookieSessionManager
 from .exception.instagram_auth_exception import InstagramAuthException
@@ -52,7 +52,7 @@ class Instagram:
         """
         param string username
         param string password
-        param null sessionFolder
+        param null session_folder
 
         return Instagram
         """
@@ -63,15 +63,16 @@ class Instagram:
             session_folder = cwd + os.path.sep + 'sessions' + os.path.sep
 
         if isinstance(session_folder, str):
+            cookie_filename = str(username).strip().replace(' ', '_')
+            cookie_filename = re.sub(r'(?u)[^-\w.]', '', cookie_filename)
 
             Instagram.instance_cache = CookieSessionManager(
-                session_folder, slugify(username) + '.txt')
+                session_folder, cookie_filename + '.txt')
 
         else:
             Instagram.instance_cache = session_folder
 
         Instagram.instance_cache.empty_saved_cookies()
-
 
         self.session_username = username
         self.session_password = password
